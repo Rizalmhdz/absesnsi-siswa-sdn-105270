@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "377563740890",
+    "project_id": "absensi-siswa-sdn-105270",
+    "storage_bucket": "absensi-siswa-sdn-105270.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:377563740890:android:e61a5a1fc6eab7d28b83e3",
+        "android_client_info": {
+          "package_name": "com.mitravisual.absensisiswasdnegeri105270"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuQuPXilZy1MMNYvbg3xz1O2KC7Ya8Md4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
