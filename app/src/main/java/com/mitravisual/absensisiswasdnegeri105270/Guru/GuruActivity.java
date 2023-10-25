@@ -3,23 +3,16 @@ package com.mitravisual.absensisiswasdnegeri105270.Guru;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
-import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -39,28 +32,34 @@ import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
-import com.mitravisual.absensisiswasdnegeri105270.Admin.Adapter.ItemAdapterDataSiswa;
-import com.mitravisual.absensisiswasdnegeri105270.Admin.Entity.DataSiswa;
+import com.itextpdf.layout.property.VerticalAlignment;
 import com.mitravisual.absensisiswasdnegeri105270.Guru.Adapter.ItemAdapterDataAbsensiSiswa;
 import com.mitravisual.absensisiswasdnegeri105270.Guru.Entity.DataQr;
+import com.mitravisual.absensisiswasdnegeri105270.Guru.Entity.DataQrRekap;
 import com.mitravisual.absensisiswasdnegeri105270.Login.Login;
 import com.mitravisual.absensisiswasdnegeri105270.R;
 import com.mitravisual.absensisiswasdnegeri105270.preferences;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
+import java.util.Date;
+import java.util.Locale;
 
 public class GuruActivity extends AppCompatActivity {
 
@@ -78,8 +77,10 @@ public class GuruActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
 
-    private String Nisn, Nama, Kelas, user;
-    private String namaGuru, guruKelas;
+    private String Nisn, Nama, Kelas, user, keterangan;
+    private String namaGuru, guruKelas, tipeAbsen;
+
+    private String tanggal, bulan, tahun, hariTanggal;
     private IntentResult result;
     AutoIncrement autoIncrement = new AutoIncrement();
     private ArrayList<String> arrNisn;
@@ -203,19 +204,34 @@ public class GuruActivity extends AppCompatActivity {
         btnCetakPersemester = findViewById(R.id.btnCetakPersemester);
         btnCancel = findViewById(R.id.btnCancel);
 
+        tanggal = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        bulan = new SimpleDateFormat("MMMM", new Locale("id")).format(new Date());
+        tahun = new SimpleDateFormat("yyyy").format(new Date());
+        hariTanggal = new SimpleDateFormat("EEEE, dd-MMM-yyyy", new Locale("id")).format(new Date());
+
         // Mengatur tindakan saat tombol "Cetak PDF Harian" diklik
         btnCetakHarian.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReference.child("users").child("Absensi-Siswa").addListenerForSingleValueEvent(new ValueEventListener() {
+                tipeAbsen = "harian";
+
+                databaseReference.child(user).child("Absensi-Siswa").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         ArrayList<DataQr> qrDataList = new ArrayList<>();
                         for (DataSnapshot item : snapshot.getChildren()) {
-                            DataQr qrData = item.getValue(DataQr.class);
-                            qrDataList.add(qrData);
+                            // Melakukan iterasi lebih lanjut pada item di dalam blok yang sama.
+                            for (DataSnapshot nestedItem : item.getChildren()) {
+                                // Lakukan sesuatu dengan nestedItem di sini.
+                                String nestedItemKey = nestedItem.getKey();
+                                // Memeriksa apakah kunci nestedItem sesuai dengan tanggal hari ini
+                                if (nestedItemKey.equals(tanggal)) {
+                                    // Jika sesuai, tambahkan nestedItem ke daftar yang difilter
+                                    DataQr qrData = nestedItem.getValue(DataQr.class);
+                                    qrDataList.add(qrData);
+                                }
+                            }
                         }
-
                         try {
                             // Menghapus data di Firebase
                             databaseReference.child("users").child("Absensi-Siswa").setValue(null);
@@ -240,20 +256,98 @@ public class GuruActivity extends AppCompatActivity {
         btnCetakBulanan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReference.child("users").child("Absensi-Siswa").addListenerForSingleValueEvent(new ValueEventListener() {
+
+                tipeAbsen = "bulanan";
+                databaseReference.child(user).child("Absensi-Siswa").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        ArrayList<DataQr> qrDataList = new ArrayList<>();
+                        ArrayList<DataQrRekap> qrDataList = new ArrayList<>();
                         for (DataSnapshot item : snapshot.getChildren()) {
-                            DataQr qrData = item.getValue(DataQr.class);
-                            qrDataList.add(qrData);
-                        }
+                            DataQrRekap dataQrRekap = new DataQrRekap();
 
+                            // data sementara rekap sakit, izin, dan alpha perminggu 1 2 3 4
+                            ArrayList<Integer> sakit = new ArrayList<>();
+                            sakit.addAll(Arrays.asList(0, 0, 0, 0));
+                            ArrayList<Integer> izin = new ArrayList<>();
+                            izin.addAll(Arrays.asList(0, 0, 0, 0));
+                            ArrayList<Integer> alpha = new ArrayList<>();
+                            alpha.addAll(Arrays.asList(0, 0, 0, 0));
+
+                            // Melakukan iterasi lebih lanjut pada item di dalam blok yang sama.
+                            if(item.hasChildren()) {
+                                for (DataSnapshot nestedItem : item.getChildren()) {
+                                    dataQrRekap.setNama(nestedItem.child("nama").getValue(String.class));
+                                    dataQrRekap.setNo(nestedItem.child("no").getValue(Integer.class));
+
+                                    // Set tanggal ke 1 untuk memulai iterasi dari tanggal pertama bulan ini
+                                    Calendar calendar = Calendar.getInstance();
+                                    calendar.set(Calendar.DAY_OF_MONTH, 1);
+                                    int bulanSekarang = calendar.get(Calendar.MONTH);
+
+                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+
+                                    // Iterasi melalui tanggal dalam bulan ini
+                                    while (calendar.get(Calendar.MONTH) == bulanSekarang) {
+                                        if( sdf.format(calendar.getTime()).equals(nestedItem.getKey())){
+                                            int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                                            if(dayOfMonth >= 1 && dayOfMonth <= 7) {
+                                                if(nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("sakit")){
+                                                    sakit.set(0, sakit.get(0) + 1);
+                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("izin")) {
+                                                    izin.set(0, izin.get(0) + 1);
+                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("alpha")) {
+                                                    alpha.set(0, alpha.get(0) + 1);
+                                                }
+                                            }
+                                            else if (dayOfMonth >= 8 && dayOfMonth <= 14) {
+                                                if(nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("sakit")){
+                                                    sakit.set(1, sakit.get(1) + 1);
+                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("izin")) {
+                                                    izin.set(1, izin.get(1) + 1);
+                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("alpha")) {
+                                                    alpha.set(1, alpha.get(1) + 1);
+                                                }
+                                            }
+                                            else if (dayOfMonth >= 15 && dayOfMonth <= 21) {
+                                                if(nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("sakit")){
+                                                    sakit.set(2, sakit.get(2) + 1);
+                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("izin")) {
+                                                    izin.set(2, izin.get(2) + 1);
+                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("alpha")) {
+                                                    alpha.set(2, alpha.get(2) + 1);
+                                                }
+                                            }
+                                            else if (dayOfMonth >= 22) {
+
+                                                if(nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("sakit")){
+                                                    sakit.set(3, sakit.get(3) + 1);
+                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("izin")) {
+                                                    izin.set(3, izin.get(3) + 1);
+                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("alpha")) {
+                                                    alpha.set(3, alpha.get(3) + 1);
+                                                }
+                                            }
+                                        }
+
+                                        // Pindah ke tanggal berikutnya
+                                        calendar.add(Calendar.DAY_OF_MONTH, 1);
+                                    }
+
+
+                                }
+                            }
+
+                            dataQrRekap.setSakit(sakit);
+                            dataQrRekap.setIzin(izin);
+                            dataQrRekap.setAlpha(alpha);
+                            qrDataList.add(dataQrRekap);
+
+                        }
                         try {
                             // Menghapus data di Firebase
                             databaseReference.child("users").child("Absensi-Siswa").setValue(null);
-                            ArrayList<DataQr> filteredList = filterDataByBulanan(qrDataList);
-                            createPdfFromQrList(filteredList);
+                            createPdfBulanan(qrDataList);
                             autoIncrement.resetCounter();
                             modalCetakPdf.setVisibility(View.GONE);
                         } catch (FileNotFoundException e) {
@@ -273,6 +367,8 @@ public class GuruActivity extends AppCompatActivity {
         btnCetakPersemester.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                tipeAbsen = "semester";
                 databaseReference.child("users").child("Absensi-Siswa").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -313,7 +409,7 @@ public class GuruActivity extends AppCompatActivity {
 
     private void createPdfFromQrList(ArrayList<DataQr> allQrData) throws FileNotFoundException {
         String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
-        File file = new File(pdfPath, "Absensi Siswa SD NEGERI 105270 "+namaGuru+"(Kelas "+ guruKelas+")"+".pdf");
+        File file = new File(pdfPath, "Absensi "+ tipeAbsen + " Siswa SD NEGERI 105270 "+namaGuru+"(Kelas "+ guruKelas+")"+".pdf");
 
         try {
             OutputStream outputStream = new FileOutputStream(file);
@@ -324,23 +420,26 @@ public class GuruActivity extends AppCompatActivity {
 
             // Judul
             Paragraph judul = new Paragraph("Absensi Siswa SD NEGERI 105270")
-                    .setBold().setFontSize(20)
+                    .setBold().setFontSize(14)
                     .setTextAlignment(TextAlignment.CENTER);
             document.add(judul);
 
             // sub Judul
-            Paragraph subJudul = new Paragraph("Nama Guru : " + namaGuru +
-                    "\n Kelas : " + guruKelas +
-                    "\n Jumlah Kehadiran : " + autoIncrement.getTotal() +
-                    "\n Jumlah Siswa : " + arrNisn.size())
-                    .setBold().setFontSize(14)
+            Paragraph subJudul = new Paragraph("Nama Guru \t \t \t : " + namaGuru +
+                    "\n Kelas \t \t \t \t \t : " + guruKelas +
+                    "\n Jumlah Kehadiran \t : " + autoIncrement.getTotal() +
+                    "\n Jumlah Siswa \t\t\t: " + arrNisn.size() + "\n")
+                    .setFontSize(12)
                     .setTextAlignment(TextAlignment.LEFT);
             document.add(subJudul);
 
             // Tabel
-            float[] columnWidths = {1,1, 3, 2, 2};
+            float[] columnWidths = {1,1, 3, 2, 2, 2};
             Table table = new Table(columnWidths);
             table.setWidth(UnitValue.createPercentValue(100));
+            table.setFontSize(10);
+            table.setVerticalAlignment(VerticalAlignment.MIDDLE);
+            table.setTextAlignment(TextAlignment.CENTER);
 
             // Header Tabel
             table.addHeaderCell("No");
@@ -348,6 +447,7 @@ public class GuruActivity extends AppCompatActivity {
             table.addHeaderCell("Nama");
             table.addHeaderCell("Jam");
             table.addHeaderCell("Tanggal");
+            table.addHeaderCell("Keterangan");
 
             Comparator<DataQr> comparator = new Comparator<DataQr>() {
                 @Override
@@ -364,6 +464,7 @@ public class GuruActivity extends AppCompatActivity {
                 table.addCell(qr.getNama());
                 table.addCell(String.valueOf(qr.getJam()));
                 table.addCell(String.valueOf(qr.getTanggal()));
+                table.addCell(String.valueOf(qr.getKeterangan()));
             }
 
             document.add(table);
@@ -375,6 +476,118 @@ public class GuruActivity extends AppCompatActivity {
             Toast.makeText(this, "Gagal membuat PDF: File tidak ditemukan", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void createPdfBulanan(ArrayList<DataQrRekap> allQrData) throws FileNotFoundException {
+        String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
+        File file = new File(pdfPath, "Absensi "+ tipeAbsen + " Siswa SD NEGERI 105270 "+namaGuru+"(Kelas "+ guruKelas+")"+".pdf");
+
+        try {
+            OutputStream outputStream = new FileOutputStream(file);
+            PdfWriter writer = new PdfWriter(outputStream);
+            PdfDocument pdfDocument = new PdfDocument(writer);
+            Document document = new Document(pdfDocument);
+            pdfDocument.setDefaultPageSize(PageSize.A4);
+
+            // Judul
+            Paragraph judul = new Paragraph("Absensi Siswa Kelas " + guruKelas + " " + bulan + " "+ tahun + " SD NEGERI 105270")
+                    .setBold().setFontSize(14)
+                    .setTextAlignment(TextAlignment.CENTER);
+            document.add(judul);
+
+            // sub Judul
+            Paragraph subJudul = new Paragraph("Nama Guru \t \t \t : " + namaGuru +
+                    "\n Kelas \t \t \t \t \t : " + guruKelas +
+//                    "\n Jumlah Kehadiran \t : " + autoIncrement.getTotal() +
+                    "\n Jumlah Siswa \t\t\t: " + arrNisn.size() +
+                    "\n Tanggal Cetak\t\t\t: " + hariTanggal + "\n")
+                    .setFontSize(12)
+                    .setTextAlignment(TextAlignment.LEFT);
+            document.add(subJudul);
+
+            float[] columnWidths = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+            Table table = new Table(columnWidths);
+            table.setWidth(UnitValue.createPercentValue(100));
+            table.setFontSize(10);
+            table.setVerticalAlignment(VerticalAlignment.MIDDLE);
+            table.setTextAlignment(TextAlignment.CENTER);
+
+            // Baris 1
+            Cell cell11 = new Cell(3, 1).add(new Paragraph("\nNo"));
+            Cell cell12 = new Cell(3, 3).add(new Paragraph("\nNama Siswa"));
+            Cell cell13 = new Cell(1, 12).add(new Paragraph("Bulan " + bulan));
+            Cell cell14 = new Cell(2, 3).add(new Paragraph("\nTotal"));
+
+            // Tambahkan sel-sel Baris 2 ke dalam tabel
+            table.addCell(cell11);
+            table.addCell(cell12);
+            table.addCell(cell13);
+            table.addCell(cell14);
+
+            table.startNewRow();
+
+            // Baris 2
+            Cell cell21 = new Cell(1, 3).add(new Paragraph("Week 1"));
+            Cell cell22 = new Cell(1, 3).add(new Paragraph("Week 2"));
+            Cell cell23 = new Cell(1, 3).add(new Paragraph("Week 3"));
+            Cell cell24 = new Cell(1, 3).add(new Paragraph("Week 4"));
+
+            // Tambahkan sel-sel Baris 2 ke dalam tabel
+            table.addCell(cell21);
+            table.addCell(cell22);
+            table.addCell(cell23);
+            table.addCell(cell24);
+
+            table.startNewRow();
+
+            for (int i = 0; i < 5; i++) {
+                Cell cell31 = new Cell(1, 1).add(new Paragraph("S"));
+                Cell cell32 = new Cell(1, 1).add(new Paragraph("I"));
+                Cell cell33 = new Cell(1, 1).add(new Paragraph("A"));
+                table.addCell(cell31);
+                table.addCell(cell32);
+                table.addCell(cell33);
+            }
+            table.startNewRow();
+
+            Comparator<DataQrRekap> comparator = new Comparator<DataQrRekap>() {
+                @Override
+                public int compare(DataQrRekap qr1, DataQrRekap qr2) {
+                    return Integer.compare(qr1.getNo(), qr2.getNo());
+                }
+            };
+            Collections.sort(allQrData, comparator);
+
+            // Data Tabel
+            for (DataQrRekap qr : allQrData) {
+                table.addCell(new Cell(1, 1).add(new Paragraph(String.valueOf(qr.getNo()))));
+                table.addCell(new Cell(1, 3).add(new Paragraph(String.valueOf(qr.getNama()))));
+
+                int sakit = 0, izin = 0, alpha = 0;
+                for (int i = 0; i < 4; i++) {
+                    table.addCell(String.valueOf(qr.getSakit().get(i)));
+                    table.addCell(String.valueOf(qr.getIzin().get(i)));
+                    table.addCell(String.valueOf(qr.getAlpha().get(i)));
+
+                    sakit = sakit + qr.getSakit().get(i);
+                    izin = izin + qr.getIzin().get(i);
+                    alpha = alpha + qr.getAlpha().get(i);
+                }
+                table.addCell(String.valueOf(sakit));
+                table.addCell(String.valueOf(izin));
+                table.addCell(String.valueOf(alpha));
+                table.startNewRow();
+            }
+
+            document.add(table);
+            document.close();
+
+            Toast.makeText(this, "PDF berhasil dibuat: " + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Gagal membuat PDF: File tidak ditemukan", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     private ArrayList<DataQr> filterDataByHarian(ArrayList<DataQr> qrDataList) {
         ArrayList<DataQr> filteredList = new ArrayList<>();
@@ -402,7 +615,7 @@ public class GuruActivity extends AppCompatActivity {
     private ArrayList<DataQr> filterDataByBulanan(ArrayList<DataQr> qrDataList) {
         ArrayList<DataQr> filteredList = new ArrayList<>();
         Calendar today = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMM yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMM yyyy", new Locale("id"));
 
         for (DataQr qrData : qrDataList) {
             Calendar qrDate = Calendar.getInstance();
@@ -567,7 +780,7 @@ public class GuruActivity extends AppCompatActivity {
                 int no = autoIncrement.getCounter();
                 autoIncrement.increment();
 
-                DataQr qrData = new DataQr(no, Nisn, Nama, Kelas, tanggal, jam);
+                DataQr qrData = new DataQr(no, Nisn, Nama, Kelas, tanggal, jam, keterangan);
 
                 databaseReference.child("users").child("Absensi-Siswa").child(String.valueOf(no)).setValue(qrData);
 

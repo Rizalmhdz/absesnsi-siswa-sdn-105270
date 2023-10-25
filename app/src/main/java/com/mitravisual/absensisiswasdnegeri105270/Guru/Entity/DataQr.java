@@ -2,16 +2,17 @@ package com.mitravisual.absensisiswasdnegeri105270.Guru.Entity;
 
 public class DataQr {
 
-    private String code, nama, kelas, tanggal, jam;
+    private String code, nama, kelas, tanggal, jam, keterangan;
     private int no;
 
-    public DataQr(int no,String code, String nama, String kelas, String tanggal, String jam) {
+    public DataQr(int no,String code, String nama, String kelas, String tanggal, String jam, String keterangan) {
         this.no = no;
         this.code = code;
         this.nama = nama;
         this.kelas = kelas;
         this.tanggal = tanggal;
         this.jam = jam;
+        this.keterangan = keterangan;
     }
 
     public DataQr() {
@@ -64,5 +65,13 @@ public class DataQr {
 
     public void setJam(String jam) {
         this.jam = jam;
+    }
+
+    public String getKeterangan() {
+        return keterangan;
+    }
+
+    public void setKeterangan(String keterangan) {
+        this.keterangan = keterangan;
     }
 }

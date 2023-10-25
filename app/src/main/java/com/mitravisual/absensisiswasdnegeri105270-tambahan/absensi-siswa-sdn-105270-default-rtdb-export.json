@@ -1,0 +1,873 @@
+{
+  "users": {
+    "121314150011": {
+      "Absensi-Siswa": {
+        "125522480": {
+          "2023-06-22": {
+            "code": "125522480",
+            "jam": "08:58:20",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "AGUNG WIJAYA",
+            "no": 2,
+            "tanggal": "2023-06-22"
+          },
+          "2023-06-27": {
+            "code": "125522480",
+            "jam": "17:43:24",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "AGUNG WIJAYA",
+            "no": 2,
+            "tanggal": "2023-06-27"
+          },
+          "2023-06-28": {
+            "code": "125522480",
+            "jam": "08:16:27",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "AGUNG WIJAYA",
+            "no": 4,
+            "tanggal": "2023-06-28"
+          },
+          "2023-07-27": {
+            "code": "125522480",
+            "jam": "13:51:07",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "AGUNG WIJAYA",
+            "no": 2,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0113203940": {
+          "2023-05-27": {
+            "code": "0113203940",
+            "jam": "12:16:32",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "JULHAM",
+            "no": 2,
+            "tanggal": "2023-05-27"
+          },
+          "2023-06-22": {
+            "code": "0113203940",
+            "jam": "09:12:21",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "JULHAM",
+            "no": 8,
+            "tanggal": "2023-06-22"
+          },
+          "2023-07-27": {
+            "code": "0113203940",
+            "jam": "13:51:31",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "JULHAM",
+            "no": 14,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0116275063": {
+          "2023-07-27": {
+            "code": "0116275063",
+            "jam": "13:51:45",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "RAIHAN RIZKY ADITIA",
+            "no": 24,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0116719947": {
+          "2023-07-27": {
+            "code": "0116719947",
+            "jam": "13:51:37",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "Mayang Raisha Supanji",
+            "no": 18,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0117243838": {
+          "2023-06-27": {
+            "code": "0117243838",
+            "jam": "16:45:45",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "RAIHAN RIZKY ADITIA",
+            "no": 2,
+            "tanggal": "2023-06-27"
+          },
+          "2023-07-27": {
+            "code": "0117243838",
+            "jam": "13:51:49",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "RAIHAN RIZKY ADITIA",
+            "no": 26,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0119174149": {
+          "2023-06-28": {
+            "code": "0119174149",
+            "jam": "08:16:07",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "QAYLA PUTRI",
+            "no": 2,
+            "tanggal": "2023-06-28"
+          },
+          "2023-07-27": {
+            "code": "0119174149",
+            "jam": "13:51:42",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "QAYLA PUTRI",
+            "no": 22,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0121272565": {
+          "2023-05-27": {
+            "code": "0121272565",
+            "jam": "12:17:03",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "KHAYLA PRILA",
+            "no": 14,
+            "tanggal": "2023-05-27"
+          },
+          "2023-07-27": {
+            "code": "0121272565",
+            "jam": "13:51:34",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "KHAYLA PRILA",
+            "no": 16,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0123469015": {
+          "2023-07-27": {
+            "code": "0123469015",
+            "jam": "13:51:52",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "RAIHAN ADITIA",
+            "no": 28,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0124147054": {
+          "2023-05-27": {
+            "code": "0124147054",
+            "jam": "12:16:53",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "ANIN DITA RIFANY",
+            "no": 10,
+            "tanggal": "2023-05-27"
+          },
+          "2023-06-22": {
+            "code": "0124147054",
+            "jam": "09:00:46",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "ANIN DITA RIFANY",
+            "no": 2,
+            "tanggal": "2023-06-22"
+          },
+          "2023-07-27": {
+            "code": "0124147054",
+            "jam": "13:51:14",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "ANIN DITA RIFANY",
+            "no": 4,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0126405644": {
+          "2023-05-27": {
+            "code": "0126405644",
+            "jam": "12:17:08",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "NEFFAN ALFAHRI",
+            "no": 16,
+            "tanggal": "2023-05-27"
+          },
+          "2023-07-27": {
+            "code": "0126405644",
+            "jam": "13:51:40",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "NEFFAN ALFAHRI",
+            "no": 20,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0126540116": {
+          "2023-05-27": {
+            "code": "0126540116",
+            "jam": "12:16:36",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "BIMA PRASETYO",
+            "no": 4,
+            "tanggal": "2023-05-27"
+          },
+          "2023-06-22": {
+            "code": "0126540116",
+            "jam": "09:12:16",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "BIMA PRASETYO",
+            "no": 4,
+            "tanggal": "2023-06-22"
+          },
+          "2023-07-27": {
+            "code": "0126540116",
+            "jam": "13:51:23",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "BIMA PRASETYO",
+            "no": 10,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0128253014": {
+          "2023-05-27": {
+            "code": "0128253014",
+            "jam": "12:16:42",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "AZMI FAZILA",
+            "no": 6,
+            "tanggal": "2023-05-27"
+          },
+          "2023-06-22": {
+            "code": "0128253014",
+            "jam": "09:12:13",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "AZMI FAZILA",
+            "no": 2,
+            "tanggal": "2023-06-22"
+          },
+          "2023-07-27": {
+            "code": "0128253014",
+            "jam": "13:51:20",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "AZMI FAZILA",
+            "no": 8,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0129200377": {
+          "2023-06-22": {
+            "code": "0129200377",
+            "jam": "09:12:19",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "Jelita br.Sinulingga",
+            "no": 6,
+            "tanggal": "2023-06-22"
+          },
+          "2023-07-27": {
+            "code": "0129200377",
+            "jam": "13:51:28",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "Jelita br.Sinulingga",
+            "no": 12,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0129733603": {
+          "2023-05-27": {
+            "code": "0129733603",
+            "jam": "12:16:47",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "ASYILLA RIZKY",
+            "no": 8,
+            "tanggal": "2023-05-27"
+          },
+          "2023-06-22": {
+            "code": "0129733603",
+            "jam": "09:00:49",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "ASYILLA RIZKY",
+            "no": 4,
+            "tanggal": "2023-06-22"
+          },
+          "2023-07-27": {
+            "code": "0129733603",
+            "jam": "13:51:17",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "ASYILLA RIZKY",
+            "no": 6,
+            "tanggal": "2023-07-27"
+          }
+        }
+      },
+      "as": "guru",
+      "email": "elizasitorus08@gmail.com",
+      "guruKelas": "6",
+      "nama": "Nova Lina S.Pd",
+      "nip": "121314150011",
+      "password": "12345",
+      "terdaftar": "Terdaftar"
+    },
+    "121314150012": {
+      "Absensi-Siswa": {
+        "0113203940": {
+          "jam": "17:18:31",
+          "kelas": "6",
+          "nama": "JULHAM",
+          "nisn": "0113203940",
+          "no": 1,
+          "tanggal": "Sabtu, 24 Jun 2023"
+        }
+      },
+      "as": "guru",
+      "email": "elizasitorus08@gmail.com",
+      "guruKelas": "5",
+      "nama": "Ika Puspita,S.Pd",
+      "nip": "121314150012",
+      "password": "aku",
+      "terdaftar": "Terdaftar"
+    },
+    "121314250033": {
+      "Absensi-Siswa": {
+        "0113203940": {
+          "jam": "11:27:37",
+          "kelas": "6",
+          "nama": "JULHAM",
+          "nisn": "0113203940",
+          "no": 1,
+          "tanggal": "Jumat, 16 Jun 2023"
+        }
+      },
+      "as": "guru",
+      "email": "juan@gmail.com",
+      "guruKelas": "7",
+      "nama": "Edwart",
+      "nip": "121314250033",
+      "password": "123",
+      "terdaftar": "Terdaftar"
+    },
+    "196306261988031020": {
+      "Absensi-Siswa": {
+        "125522480": {
+          "2023-06-22": {
+            "code": "125522480",
+            "jam": "08:58:20",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "AGUNG WIJAYA",
+            "no": 2,
+            "tanggal": "2023-06-22"
+          },
+          "2023-06-27": {
+            "code": "125522480",
+            "jam": "17:43:24",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "AGUNG WIJAYA",
+            "no": 2,
+            "tanggal": "2023-06-27"
+          },
+          "2023-06-28": {
+            "code": "125522480",
+            "jam": "08:16:27",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "AGUNG WIJAYA",
+            "no": 4,
+            "tanggal": "2023-06-28"
+          },
+          "2023-07-27": {
+            "code": "125522480",
+            "jam": "13:51:07",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "AGUNG WIJAYA",
+            "no": 2,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0113203940": {
+          "2023-05-27": {
+            "code": "0113203940",
+            "jam": "12:16:32",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "JULHAM",
+            "no": 2,
+            "tanggal": "2023-05-27"
+          },
+          "2023-06-22": {
+            "code": "0113203940",
+            "jam": "09:12:21",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "JULHAM",
+            "no": 8,
+            "tanggal": "2023-06-22"
+          },
+          "2023-07-27": {
+            "code": "0113203940",
+            "jam": "13:51:31",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "JULHAM",
+            "no": 14,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0116275063": {
+          "2023-07-27": {
+            "code": "0116275063",
+            "jam": "13:51:45",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "RAIHAN RIZKY ADITIA",
+            "no": 24,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0116719947": {
+          "2023-07-27": {
+            "code": "0116719947",
+            "jam": "13:51:37",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "Mayang Raisha Supanji",
+            "no": 18,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0117243838": {
+          "2023-06-27": {
+            "code": "0117243838",
+            "jam": "16:45:45",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "RAIHAN RIZKY ADITIA",
+            "no": 2,
+            "tanggal": "2023-06-27"
+          },
+          "2023-07-27": {
+            "code": "0117243838",
+            "jam": "13:51:49",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "RAIHAN RIZKY ADITIA",
+            "no": 26,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0119174149": {
+          "2023-06-28": {
+            "code": "0119174149",
+            "jam": "08:16:07",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "QAYLA PUTRI",
+            "no": 2,
+            "tanggal": "2023-06-28"
+          },
+          "2023-07-27": {
+            "code": "0119174149",
+            "jam": "13:51:42",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "QAYLA PUTRI",
+            "no": 22,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0121272565": {
+          "2023-05-27": {
+            "code": "0121272565",
+            "jam": "12:17:03",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "KHAYLA PRILA",
+            "no": 14,
+            "tanggal": "2023-05-27"
+          },
+          "2023-07-27": {
+            "code": "0121272565",
+            "jam": "13:51:34",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "KHAYLA PRILA",
+            "no": 16,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0123469015": {
+          "2023-07-27": {
+            "code": "0123469015",
+            "jam": "13:51:52",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "RAIHAN ADITIA",
+            "no": 28,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0124147054": {
+          "2023-05-27": {
+            "code": "0124147054",
+            "jam": "12:16:53",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "ANIN DITA RIFANY",
+            "no": 10,
+            "tanggal": "2023-05-27"
+          },
+          "2023-06-22": {
+            "code": "0124147054",
+            "jam": "09:00:46",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "ANIN DITA RIFANY",
+            "no": 2,
+            "tanggal": "2023-06-22"
+          },
+          "2023-07-27": {
+            "code": "0124147054",
+            "jam": "13:51:14",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "ANIN DITA RIFANY",
+            "no": 4,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0126405644": {
+          "2023-05-27": {
+            "code": "0126405644",
+            "jam": "12:17:08",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "NEFFAN ALFAHRI",
+            "no": 16,
+            "tanggal": "2023-05-27"
+          },
+          "2023-07-27": {
+            "code": "0126405644",
+            "jam": "13:51:40",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "NEFFAN ALFAHRI",
+            "no": 20,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0126540116": {
+          "2023-05-27": {
+            "code": "0126540116",
+            "jam": "12:16:36",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "BIMA PRASETYO",
+            "no": 4,
+            "tanggal": "2023-05-27"
+          },
+          "2023-06-22": {
+            "code": "0126540116",
+            "jam": "09:12:16",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "BIMA PRASETYO",
+            "no": 4,
+            "tanggal": "2023-06-22"
+          },
+          "2023-07-27": {
+            "code": "0126540116",
+            "jam": "13:51:23",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "BIMA PRASETYO",
+            "no": 10,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0128253014": {
+          "2023-05-27": {
+            "code": "0128253014",
+            "jam": "12:16:42",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "AZMI FAZILA",
+            "no": 6,
+            "tanggal": "2023-05-27"
+          },
+          "2023-06-22": {
+            "code": "0128253014",
+            "jam": "09:12:13",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "AZMI FAZILA",
+            "no": 2,
+            "tanggal": "2023-06-22"
+          },
+          "2023-07-27": {
+            "code": "0128253014",
+            "jam": "13:51:20",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "AZMI FAZILA",
+            "no": 8,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0129200377": {
+          "2023-06-22": {
+            "code": "0129200377",
+            "jam": "09:12:19",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "Jelita br.Sinulingga",
+            "no": 6,
+            "tanggal": "2023-06-22"
+          },
+          "2023-07-27": {
+            "code": "0129200377",
+            "jam": "13:51:28",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "Jelita br.Sinulingga",
+            "no": 12,
+            "tanggal": "2023-07-27"
+          }
+        },
+        "0129733603": {
+          "2023-05-27": {
+            "code": "0129733603",
+            "jam": "12:16:47",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "ASYILLA RIZKY",
+            "no": 8,
+            "tanggal": "2023-05-27"
+          },
+          "2023-06-22": {
+            "code": "0129733603",
+            "jam": "09:00:49",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "ASYILLA RIZKY",
+            "no": 4,
+            "tanggal": "2023-06-22"
+          },
+          "2023-07-27": {
+            "code": "0129733603",
+            "jam": "13:51:17",
+            "kelas": "6",
+            "keterangan": "Hadir",
+            "nama": "ASYILLA RIZKY",
+            "no": 6,
+            "tanggal": "2023-07-27"
+          }
+        }
+      },
+      "Data-Guru": {
+        "121314150011": {
+          "as": "guru",
+          "email": "elizasitorus08@gmail.com",
+          "guruKelas": "6",
+          "nama": "Nova Lina S.Pd",
+          "nip": "121314150011",
+          "password": "12345",
+          "terdaftar": "Terdaftar"
+        },
+        "121314150012": {
+          "as": "guru",
+          "email": "elizasitorus08@gmail.com",
+          "guruKelas": "5",
+          "nama": "Ika Puspita,S.Pd",
+          "nip": "121314150012",
+          "password": "aku",
+          "terdaftar": "Terdaftar"
+        },
+        "121314150013": {
+          "as": "guru",
+          "email": "Belum Daftar Ulang",
+          "guruKelas": "4",
+          "nama": "Magdalena,S.Pd",
+          "nip": "121314150013",
+          "password": "Belum Daftar Ulang",
+          "terdaftar": "Belum Terdaftar"
+        },
+        "121314150014": {
+          "as": "guru",
+          "email": "Belum Daftar Ulang",
+          "guruKelas": "3",
+          "nama": "Siti Sajayu,S.Pd",
+          "nip": "121314150014",
+          "password": "Belum Daftar Ulang",
+          "terdaftar": "Belum Terdaftar"
+        },
+        "121314150015": {
+          "as": "guru",
+          "email": "Belum Daftar Ulang",
+          "guruKelas": "2",
+          "nama": "Nova Rahayu,S.Pd",
+          "nip": "121314150015",
+          "password": "Belum Daftar Ulang",
+          "terdaftar": "Belum Terdaftar"
+        },
+        "121314150016": {
+          "as": "guru",
+          "email": "Belum Daftar Ulang",
+          "guruKelas": "1",
+          "nama": "Nisa Syafitri,S.Pd",
+          "nip": "121314150016",
+          "password": "Belum Daftar Ulang",
+          "terdaftar": "Belum Terdaftar"
+        },
+        "121314250033": {
+          "as": "guru",
+          "email": "juan@gmail.com",
+          "guruKelas": "7",
+          "nama": "Edwart",
+          "nip": "121314250033",
+          "password": "123",
+          "terdaftar": "Terdaftar"
+        }
+      },
+      "Data-Siswa": {
+        "12345": {
+          "alamat": "jln.sibolangit",
+          "kelas": "6",
+          "nama": "Siska",
+          "nisn": "12345",
+          "url": "https://firebasestorage.googleapis.com/v0/b/absensi-siswa-sdn-105270.appspot.com/o/Upload%2F1687915709809%20.pdf?alt=media&token=dd9a1bae-9b05-4db5-ae0b-a17fba68fd44"
+        },
+        "125522480": {
+          "alamat": "jalan.gagak",
+          "kelas": "6",
+          "nama": "AGUNG WIJAYA",
+          "nisn": "125522480",
+          "url": "https://firebasestorage.googleapis.com/v0/b/absensi-siswa-sdn-105270.appspot.com/o/Upload%2F1686796477335%20.pdf?alt=media&token=d6798104-6562-4a5b-a66f-19de4c8a929e"
+        },
+        "0113203940": {
+          "alamat": "jalan.sukamaju",
+          "kelas": "6",
+          "nama": "JULHAM",
+          "nisn": "0113203940",
+          "url": "https://firebasestorage.googleapis.com/v0/b/absensi-siswa-sdn-105270.appspot.com/o/Upload%2F1686832168828%20.pdf?alt=media&token=8b9d5bdc-876e-4502-a1f5-66465ea24936"
+        },
+        "0116275063": {
+          "alamat": "binjai km 12",
+          "kelas": "6",
+          "nama": "RAIHAN RIZKY ADITIA",
+          "nisn": "0116275063",
+          "url": "https://firebasestorage.googleapis.com/v0/b/absensi-siswa-sdn-105270.appspot.com/o/Upload%2F1686832444713%20.pdf?alt=media&token=f7180325-f4ac-4f3d-bee8-4df3e6814819"
+        },
+        "0116719947": {
+          "alamat": "Jalan.kutilang",
+          "kelas": "6",
+          "nama": "Mayang Raisha Supanji",
+          "nisn": "0116719947",
+          "url": "https://firebasestorage.googleapis.com/v0/b/absensi-siswa-sdn-105270.appspot.com/o/Upload%2F1686832295055%20.pdf?alt=media&token=f2179f93-b261-4b64-b75f-daa78adf8c2b"
+        },
+        "0117243838": {
+          "alamat": "jalan purwodadi",
+          "kelas": "6",
+          "nama": "RAIHAN RIZKY ADITIA",
+          "nisn": "0117243838",
+          "url": "https://firebasestorage.googleapis.com/v0/b/absensi-siswa-sdn-105270.appspot.com/o/Upload%2F1686832487975%20.pdf?alt=media&token=408ce7cd-f1ac-44c4-95a8-8995889bfb44"
+        },
+        "0119174149": {
+          "alamat": "jalan.timur sukamaju",
+          "kelas": "6",
+          "nama": "QAYLA PUTRI",
+          "nisn": "0119174149",
+          "url": "https://firebasestorage.googleapis.com/v0/b/absensi-siswa-sdn-105270.appspot.com/o/Upload%2F1686832386967%20.pdf?alt=media&token=1e7f596d-73fa-4da0-9b28-9d9199e89916"
+        },
+        "0121272565": {
+          "alamat": "Gang Jambu",
+          "kelas": "6",
+          "nama": "KHAYLA PRILA",
+          "nisn": "0121272565",
+          "url": "https://firebasestorage.googleapis.com/v0/b/absensi-siswa-sdn-105270.appspot.com/o/Upload%2F1686832212915%20.pdf?alt=media&token=d7f06c16-07fa-481c-a6e2-cb17c8900751"
+        },
+        "0123469015": {
+          "alamat": "Jalan Suka maju",
+          "kelas": "6",
+          "nama": "RAIHAN ADITIA",
+          "nisn": "0123469015",
+          "url": "https://firebasestorage.googleapis.com/v0/b/absensi-siswa-sdn-105270.appspot.com/o/Upload%2F1686832532244%20.pdf?alt=media&token=42a72043-4968-49ad-afbc-bff4b51a81a6"
+        },
+        "0124147054": {
+          "alamat": "jalan.bersama",
+          "kelas": "6",
+          "nama": "ANIN DITA RIFANY",
+          "nisn": "0124147054",
+          "url": "https://firebasestorage.googleapis.com/v0/b/absensi-siswa-sdn-105270.appspot.com/o/Upload%2F1686796589764%20.pdf?alt=media&token=d0ae5108-7ff0-44d1-b624-06c9eb850f05"
+        },
+        "0126405644": {
+          "alamat": "jalan.selamat jati",
+          "kelas": "6",
+          "nama": "NEFFAN ALFAHRI",
+          "nisn": "0126405644",
+          "url": "https://firebasestorage.googleapis.com/v0/b/absensi-siswa-sdn-105270.appspot.com/o/Upload%2F1686832345762%20.pdf?alt=media&token=14351aae-2404-43a6-b682-a2348c94c33b"
+        },
+        "0126540116": {
+          "alamat": "jalan.duku timur",
+          "kelas": "6",
+          "nama": "BIMA PRASETYO",
+          "nisn": "0126540116",
+          "url": "https://firebasestorage.googleapis.com/v0/b/absensi-siswa-sdn-105270.appspot.com/o/Upload%2F1686832067926%20.pdf?alt=media&token=2ca5f7cc-704e-4064-a5b2-6d2016ddcc70"
+        },
+        "0128253014": {
+          "alamat": "Muliorejo sei semayang",
+          "kelas": "6",
+          "nama": "AZMI FAZILA",
+          "nisn": "0128253014",
+          "url": "https://firebasestorage.googleapis.com/v0/b/absensi-siswa-sdn-105270.appspot.com/o/Upload%2F1686796705800%20.pdf?alt=media&token=de890801-7893-4a4c-9811-b2710531aa8b"
+        },
+        "0129200377": {
+          "alamat": "jalan.jaya bakti",
+          "kelas": "6",
+          "nama": "Jelita br.Sinulingga",
+          "nisn": "0129200377",
+          "url": "https://firebasestorage.googleapis.com/v0/b/absensi-siswa-sdn-105270.appspot.com/o/Upload%2F1686832131491%20.pdf?alt=media&token=f6a69edc-3b38-4b05-b943-005a8ea954ed"
+        },
+        "0129733603": {
+          "alamat": "jalan.delima",
+          "kelas": "6",
+          "nama": "ASYILLA RIZKY",
+          "nisn": "0129733603",
+          "url": "https://firebasestorage.googleapis.com/v0/b/absensi-siswa-sdn-105270.appspot.com/o/Upload%2F1686796642160%20.pdf?alt=media&token=658ac1f7-fc75-4d9a-8f42-fb97c493b73d"
+        },
+        " 0129046091": {
+          "alamat": "jalan.purwodadi",
+          "kelas": "6",
+          "nama": "ALMIRA SAQILA",
+          "nisn": " 0129046091",
+          "url": "https://firebasestorage.googleapis.com/v0/b/absensi-siswa-sdn-105270.appspot.com/o/Upload%2F1686796534271%20.pdf?alt=media&token=04665775-cbd3-4dab-a97d-53fdc856ea3d"
+        }
+      },
+      "as": "admin",
+      "email": "085264521800",
+      "nama": "Rianto Barus, S.Pd",
+      "nip": "196306261988031020",
+      "password": "admin"
+    }
+  }
+}
