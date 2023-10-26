@@ -45,7 +45,7 @@ import com.mitravisual.absensisiswasdnegeri105270.Login.Login;
 import com.mitravisual.absensisiswasdnegeri105270.R;
 import com.mitravisual.absensisiswasdnegeri105270.preferences;
 
-import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 
@@ -80,7 +80,7 @@ public class GuruActivity extends AppCompatActivity {
     private String Nisn, Nama, Kelas, user, keterangan;
     private String namaGuru, guruKelas, tipeAbsen;
 
-    private String tanggal, bulan, tahun, hariTanggal;
+    private String tanggal, bulan, tahun, hariTanggal, semester;
     private IntentResult result;
     AutoIncrement autoIncrement = new AutoIncrement();
     private ArrayList<String> arrNisn;
@@ -369,20 +369,117 @@ public class GuruActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 tipeAbsen = "semester";
-                databaseReference.child("users").child("Absensi-Siswa").addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+                Date currentDate = new Date();
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(currentDate);
+                int month = calendar.get(Calendar.MONTH) + 1;
+                semester = (month > 6) ? "Ganjil" : "Genap";
+                int isGenap = (semester.equalsIgnoreCase("ganjil"))? 6 : 0;
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                databaseReference.child(user).child("Absensi-Siswa").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        ArrayList<DataQr> qrDataList = new ArrayList<>();
+                        ArrayList<DataQrRekap> qrDataList = new ArrayList<>();
                         for (DataSnapshot item : snapshot.getChildren()) {
-                            DataQr qrData = item.getValue(DataQr.class);
-                            qrDataList.add(qrData);
-                        }
+                            DataQrRekap dataQrRekap = new DataQrRekap();
 
+                            // data sementara rekap sakit, izin, dan alpha per bulan
+                            ArrayList<Integer> sakit = new ArrayList<>();
+                            sakit.addAll(Arrays.asList(0, 0, 0, 0, 0, 0));
+                            ArrayList<Integer> izin = new ArrayList<>();
+                            izin.addAll(Arrays.asList(0, 0, 0, 0, 0, 0));
+                            ArrayList<Integer> alpha = new ArrayList<>();
+                            alpha.addAll(Arrays.asList(0, 0, 0, 0, 0, 0));
+
+                            // Melakukan iterasi lebih lanjut pada key Tanggal dari NISN siswa
+                            if(item.hasChildren()) {
+                                for (DataSnapshot nestedItem : item.getChildren()) {
+                                    dataQrRekap.setNama(nestedItem.child("nama").getValue(String.class));
+                                    dataQrRekap.setNo(nestedItem.child("no").getValue(Integer.class));
+
+                                    int yearData = 0;
+                                    int monthData = 0;
+                                    try {
+                                        Date date = sdf.parse(nestedItem.getKey());
+
+                                        // Mengambil bulan, tahun, dan tanggal sebagai integer
+                                        yearData = date.getYear() + 1900;
+                                        monthData = date.getMonth() + 1;
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    if (yearData == Integer.parseInt(tahun)) {
+                                        try {
+                                            if (monthData == 1 + isGenap) {
+                                                if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("sakit")) {
+                                                    sakit.set(0, sakit.get(0) + 1);
+                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("izin")) {
+                                                    izin.set(0, izin.get(0) + 1);
+                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("alpha")) {
+                                                    alpha.set(0, alpha.get(0) + 1);
+                                                }
+                                            } else if (monthData == 2 + isGenap) {
+                                                if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("sakit")) {
+                                                    sakit.set(1, sakit.get(1) + 1);
+                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("izin")) {
+                                                    izin.set(1, izin.get(1) + 1);
+                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("alpha")) {
+                                                    alpha.set(1, alpha.get(1) + 1);
+                                                }
+                                            } else if (monthData == 3 + isGenap) {
+                                                if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("sakit")) {
+                                                    sakit.set(2, sakit.get(2) + 1);
+                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("izin")) {
+                                                    izin.set(2, izin.get(2) + 1);
+                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("alpha")) {
+                                                    alpha.set(2, alpha.get(2) + 1);
+                                                }
+                                            } else if (monthData == 4 + isGenap) {
+
+                                                if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("sakit")) {
+                                                    sakit.set(3, sakit.get(3) + 1);
+                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("izin")) {
+                                                    izin.set(3, izin.get(3) + 1);
+                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("alpha")) {
+                                                    alpha.set(3, alpha.get(3) + 1);
+                                                }
+                                            } else if (monthData == 5 + isGenap) {
+
+                                                if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("sakit")) {
+                                                    sakit.set(4, sakit.get(4) + 1);
+                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("izin")) {
+                                                    izin.set(4, izin.get(4) + 1);
+                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("alpha")) {
+                                                    alpha.set(4, alpha.get(4) + 1);
+                                                }
+                                            } else if (monthData == 6 + isGenap) {
+                                                if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("sakit")) {
+                                                    sakit.set(5, sakit.get(5) + 1);
+                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("izin")) {
+                                                    izin.set(5, izin.get(5) + 1);
+                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("alpha")) {
+                                                    alpha.set(5, alpha.get(5) + 1);
+                                                }
+                                            }
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+                            }
+                            dataQrRekap.setSakit(sakit);
+                            dataQrRekap.setIzin(izin);
+                            dataQrRekap.setAlpha(alpha);
+                            qrDataList.add(dataQrRekap);
+
+                        }
                         try {
                             // Menghapus data di Firebase
                             databaseReference.child("users").child("Absensi-Siswa").setValue(null);
-                            ArrayList<DataQr> filteredList = filterDataByPersemester(qrDataList);
-                            createPdfFromQrList(filteredList);
+                            createPdfSemester(qrDataList);
                             autoIncrement.resetCounter();
                             modalCetakPdf.setVisibility(View.GONE);
                         } catch (FileNotFoundException e) {
@@ -395,6 +492,8 @@ public class GuruActivity extends AppCompatActivity {
                         // Error terjadi saat mengambil data dari Firebase
                     }
                 });
+
+
             }
         });
 
@@ -588,6 +687,126 @@ public class GuruActivity extends AppCompatActivity {
         }
     }
 
+    private void createPdfSemester(ArrayList<DataQrRekap> allQrData) throws FileNotFoundException {
+        String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
+        File file = new File(pdfPath, "Absensi "+ tipeAbsen + " Siswa SD NEGERI 105270 "+namaGuru+"(Kelas "+ guruKelas+")"+".pdf");
+
+        try {
+            OutputStream outputStream = new FileOutputStream(file);
+            PdfWriter writer = new PdfWriter(outputStream);
+            PdfDocument pdfDocument = new PdfDocument(writer);
+            Document document = new Document(pdfDocument);
+            pdfDocument.setDefaultPageSize(PageSize.A4.rotate());
+
+            // Judul
+            Paragraph judul = new Paragraph("Absensi Siswa Kelas " + guruKelas + " Semester " + semester + " "+ tahun + " SD NEGERI 105270")
+                    .setBold().setFontSize(14)
+                    .setTextAlignment(TextAlignment.CENTER);
+            document.add(judul);
+
+            // sub Judul
+            Paragraph subJudul = new Paragraph("Nama Guru \t \t \t : " + namaGuru +
+                    "\n Kelas \t \t \t \t \t : " + guruKelas +
+                    "\n Jumlah Siswa \t\t\t: " + arrNisn.size() +
+                    "\n Tanggal Cetak\t\t\t: " + hariTanggal + "\n")
+                    .setFontSize(12)
+                    .setTextAlignment(TextAlignment.LEFT);
+            document.add(subJudul);
+
+            float[] columnWidths = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+            Table table = new Table(columnWidths);
+            table.setWidth(UnitValue.createPercentValue(100));
+            table.setFontSize(10);
+            table.setVerticalAlignment(VerticalAlignment.MIDDLE);
+            table.setTextAlignment(TextAlignment.CENTER);
+
+            // Baris 1
+            Cell cell11 = new Cell(3, 1).add(new Paragraph("\nNo"));
+            Cell cell12 = new Cell(3, 3).add(new Paragraph("\nNama Siswa"));
+            Cell cell13 = new Cell(1, 18).add(new Paragraph("Semester " + semester + " Tahun " + tahun));
+            Cell cell14 = new Cell(2, 3).add(new Paragraph("\nTotal"));
+
+            // Tambahkan sel-sel Baris 2 ke dalam tabel
+            table.addCell(cell11);
+            table.addCell(cell12);
+            table.addCell(cell13);
+            table.addCell(cell14);
+
+            table.startNewRow();
+
+            String bln1 = "", bln2 = "", bln3 = "", bln4 = "", bln5 = "", bln6 = "";
+            // Baris 2
+            if(semester.equalsIgnoreCase("genap")){
+                bln1 = "Januari"; bln2 = "Februari"; bln3 = "Maret"; bln4 = "April"; bln5 = "Mei"; bln6 = "Juni";
+            } else if (semester.equalsIgnoreCase("ganjil")) {
+                bln1 = "Juli"; bln2 = "Agustus"; bln3 = "September"; bln4 = "Oktober"; bln5 = "November"; bln6 = "Desember";
+            }
+            Cell cell21 = new Cell(1, 3).add(new Paragraph(bln1));
+            Cell cell22 = new Cell(1, 3).add(new Paragraph(bln2));
+            Cell cell23 = new Cell(1, 3).add(new Paragraph(bln3));
+            Cell cell24 = new Cell(1, 3).add(new Paragraph(bln4));
+            Cell cell25 = new Cell(1, 3).add(new Paragraph(bln5));
+            Cell cell26 = new Cell(1, 3).add(new Paragraph(bln6));
+
+            // Tambahkan sel-sel Baris 2 ke dalam tabel
+            table.addCell(cell21);
+            table.addCell(cell22);
+            table.addCell(cell23);
+            table.addCell(cell24);
+            table.addCell(cell25);
+            table.addCell(cell26);
+
+            table.startNewRow();
+
+            for (int i = 0; i < 7; i++) {
+                Cell cell31 = new Cell(1, 1).add(new Paragraph("S"));
+                Cell cell32 = new Cell(1, 1).add(new Paragraph("I"));
+                Cell cell33 = new Cell(1, 1).add(new Paragraph("A"));
+                table.addCell(cell31);
+                table.addCell(cell32);
+                table.addCell(cell33);
+            }
+            table.startNewRow();
+
+            Comparator<DataQrRekap> comparator = new Comparator<DataQrRekap>() {
+                @Override
+                public int compare(DataQrRekap qr1, DataQrRekap qr2) {
+                    return Integer.compare(qr1.getNo(), qr2.getNo());
+                }
+            };
+            Collections.sort(allQrData, comparator);
+
+//            // Data Tabel
+            for (DataQrRekap qr : allQrData) {
+                table.addCell(new Cell(1, 1).add(new Paragraph(String.valueOf(qr.getNo()))));
+                table.addCell(new Cell(1, 3).add(new Paragraph(String.valueOf(qr.getNama()))));
+
+                int sakit = 0, izin = 0, alpha = 0;
+                for (int i = 0; i < 6; i++) {
+                    table.addCell(String.valueOf(qr.getSakit().get(i)));
+                    table.addCell(String.valueOf(qr.getIzin().get(i)));
+                    table.addCell(String.valueOf(qr.getAlpha().get(i)));
+
+                    sakit = sakit + qr.getSakit().get(i);
+                    izin = izin + qr.getIzin().get(i);
+                    alpha = alpha + qr.getAlpha().get(i);
+                }
+                table.addCell(String.valueOf(sakit));
+                table.addCell(String.valueOf(izin));
+                table.addCell(String.valueOf(alpha));
+                table.startNewRow();
+            }
+
+            document.add(table);
+            document.close();
+
+            Toast.makeText(this, "PDF berhasil dibuat: " + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Gagal membuat PDF: File tidak ditemukan", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     private ArrayList<DataQr> filterDataByHarian(ArrayList<DataQr> qrDataList) {
         ArrayList<DataQr> filteredList = new ArrayList<>();
@@ -612,54 +831,6 @@ public class GuruActivity extends AppCompatActivity {
         return filteredList;
     }
 
-    private ArrayList<DataQr> filterDataByBulanan(ArrayList<DataQr> qrDataList) {
-        ArrayList<DataQr> filteredList = new ArrayList<>();
-        Calendar today = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMM yyyy", new Locale("id"));
-
-        for (DataQr qrData : qrDataList) {
-            Calendar qrDate = Calendar.getInstance();
-            try {
-                qrDate.setTime(dateFormat.parse(qrData.getTanggal()));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            if (qrDate.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
-                    qrDate.get(Calendar.MONTH) == today.get(Calendar.MONTH)) {
-                filteredList.add(qrData);
-            }
-        }
-
-        return filteredList;
-    }
-
-    private ArrayList<DataQr> filterDataByPersemester(ArrayList<DataQr> qrDataList) {
-        ArrayList<DataQr> filteredList = new ArrayList<>();
-        Calendar today = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMM yyyy");
-
-        for (DataQr qrData : qrDataList) {
-            Calendar qrDate = Calendar.getInstance();
-            try {
-                qrDate.setTime(dateFormat.parse(qrData.getTanggal()));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            int qrMonth = qrDate.get(Calendar.MONTH);
-            int currentMonth = today.get(Calendar.MONTH);
-            if ((qrMonth >= Calendar.JANUARY && qrMonth <= Calendar.JUNE) && (currentMonth >= Calendar.JANUARY && currentMonth <= Calendar.JUNE)) {
-                // Semester 1 (Januari - Juni)
-                filteredList.add(qrData);
-            } else if ((qrMonth >= Calendar.JULY && qrMonth <= Calendar.DECEMBER) && (currentMonth >= Calendar.JULY && currentMonth <= Calendar.DECEMBER)) {
-                // Semester 2 (Juli - Desember)
-                filteredList.add(qrData);
-            }
-        }
-
-        return filteredList;
-    }
 
     private void ambilKelas() {
         databaseReference.child("196306261988031020").child("Data-Siswa").addValueEventListener(new ValueEventListener() {
