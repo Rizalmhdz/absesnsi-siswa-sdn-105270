@@ -79,8 +79,9 @@ public class GuruActivity extends AppCompatActivity {
 
     private String Nisn, Nama, Kelas, user, keterangan;
     private String namaGuru, guruKelas, tipeAbsen;
+    private int totalHadir;
 
-    private String tanggal, bulan, tahun, hariTanggal, semester;
+    private String tanggal, bulan, bulanInt, tahun, hariTanggal, semester;
     private IntentResult result;
     AutoIncrement autoIncrement = new AutoIncrement();
     private ArrayList<String> arrNisn;
@@ -206,6 +207,7 @@ public class GuruActivity extends AppCompatActivity {
 
         tanggal = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         bulan = new SimpleDateFormat("MMMM", new Locale("id")).format(new Date());
+        bulanInt = new SimpleDateFormat("MM", new Locale("id")).format(new Date());
         tahun = new SimpleDateFormat("yyyy").format(new Date());
         hariTanggal = new SimpleDateFormat("EEEE, dd-MMM-yyyy", new Locale("id")).format(new Date());
 
@@ -214,6 +216,7 @@ public class GuruActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 tipeAbsen = "harian";
+                totalHadir = 0;
 
                 databaseReference.child(user).child("Absensi-Siswa").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -221,14 +224,23 @@ public class GuruActivity extends AppCompatActivity {
                         ArrayList<DataQr> qrDataList = new ArrayList<>();
                         for (DataSnapshot item : snapshot.getChildren()) {
                             // Melakukan iterasi lebih lanjut pada item di dalam blok yang sama.
-                            for (DataSnapshot nestedItem : item.getChildren()) {
-                                // Lakukan sesuatu dengan nestedItem di sini.
-                                String nestedItemKey = nestedItem.getKey();
-                                // Memeriksa apakah kunci nestedItem sesuai dengan tanggal hari ini
-                                if (nestedItemKey.equals(tanggal)) {
-                                    // Jika sesuai, tambahkan nestedItem ke daftar yang difilter
-                                    DataQr qrData = nestedItem.getValue(DataQr.class);
-                                    qrDataList.add(qrData);
+                            if(item.hasChildren()){
+                                for (DataSnapshot nestedItem : item.getChildren()) {
+                                    // Lakukan sesuatu dengan nestedItem di sini.
+                                    String nestedItemKey = nestedItem.getKey();
+                                    // Memeriksa apakah kunci nestedItem sesuai dengan tanggal hari ini
+                                    if (nestedItemKey.equals(tanggal)) {
+                                        // Jika sesuai, tambahkan nestedItem ke daftar yang difilter
+                                        try {
+                                            totalHadir = nestedItem.child("keterangan").getValue().toString().equalsIgnoreCase("hadir")? totalHadir + 1 : totalHadir;
+                                        } catch (Exception e){
+                                            Log.d("LogTAG", String.valueOf(e.getMessage()));
+                                        }
+
+                                        Log.d("LogTAG", String.valueOf(totalHadir));
+                                        DataQr qrData = nestedItem.getValue(DataQr.class);
+                                        qrDataList.add(qrData);
+                                    }
                                 }
                             }
                         }
@@ -279,62 +291,59 @@ public class GuruActivity extends AppCompatActivity {
                                     dataQrRekap.setNama(nestedItem.child("nama").getValue(String.class));
                                     dataQrRekap.setNo(nestedItem.child("no").getValue(Integer.class));
 
-                                    // Set tanggal ke 1 untuk memulai iterasi dari tanggal pertama bulan ini
-                                    Calendar calendar = Calendar.getInstance();
-                                    calendar.set(Calendar.DAY_OF_MONTH, 1);
-                                    int bulanSekarang = calendar.get(Calendar.MONTH);
+                                    int yearData = 0;
+                                    int monthData = 0;
+                                    int dayOfMonth = 0;
+                                    try {
+                                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                        Date date = sdf.parse(nestedItem.getKey());
 
-                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-
-                                    // Iterasi melalui tanggal dalam bulan ini
-                                    while (calendar.get(Calendar.MONTH) == bulanSekarang) {
-                                        if( sdf.format(calendar.getTime()).equals(nestedItem.getKey())){
-                                            int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-                                            if(dayOfMonth >= 1 && dayOfMonth <= 7) {
-                                                if(nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("sakit")){
-                                                    sakit.set(0, sakit.get(0) + 1);
-                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("izin")) {
-                                                    izin.set(0, izin.get(0) + 1);
-                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("alpha")) {
-                                                    alpha.set(0, alpha.get(0) + 1);
-                                                }
-                                            }
-                                            else if (dayOfMonth >= 8 && dayOfMonth <= 14) {
-                                                if(nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("sakit")){
-                                                    sakit.set(1, sakit.get(1) + 1);
-                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("izin")) {
-                                                    izin.set(1, izin.get(1) + 1);
-                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("alpha")) {
-                                                    alpha.set(1, alpha.get(1) + 1);
-                                                }
-                                            }
-                                            else if (dayOfMonth >= 15 && dayOfMonth <= 21) {
-                                                if(nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("sakit")){
-                                                    sakit.set(2, sakit.get(2) + 1);
-                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("izin")) {
-                                                    izin.set(2, izin.get(2) + 1);
-                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("alpha")) {
-                                                    alpha.set(2, alpha.get(2) + 1);
-                                                }
-                                            }
-                                            else if (dayOfMonth >= 22) {
-
-                                                if(nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("sakit")){
-                                                    sakit.set(3, sakit.get(3) + 1);
-                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("izin")) {
-                                                    izin.set(3, izin.get(3) + 1);
-                                                } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("alpha")) {
-                                                    alpha.set(3, alpha.get(3) + 1);
-                                                }
+                                        // Mengambil bulan, tahun, dan tanggal sebagai integer
+                                        yearData = date.getYear() + 1900;
+                                        monthData = date.getMonth() + 1;
+                                        dayOfMonth = date.getDate();
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                    if (yearData == Integer.parseInt(tahun) && monthData == Integer.parseInt(bulanInt)) {
+                                        if(dayOfMonth >= 1 && dayOfMonth <= 7) {
+                                            if(nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("sakit")){
+                                                sakit.set(0, sakit.get(0) + 1);
+                                            } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("izin")) {
+                                                izin.set(0, izin.get(0) + 1);
+                                            } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("alpha")) {
+                                                alpha.set(0, alpha.get(0) + 1);
                                             }
                                         }
+                                        else if (dayOfMonth >= 8 && dayOfMonth <= 14) {
+                                            if(nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("sakit")){
+                                                sakit.set(1, sakit.get(1) + 1);
+                                            } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("izin")) {
+                                                izin.set(1, izin.get(1) + 1);
+                                            } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("alpha")) {
+                                                alpha.set(1, alpha.get(1) + 1);
+                                            }
+                                        }
+                                        else if (dayOfMonth >= 15 && dayOfMonth <= 21) {
+                                            if(nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("sakit")){
+                                                sakit.set(2, sakit.get(2) + 1);
+                                            } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("izin")) {
+                                                izin.set(2, izin.get(2) + 1);
+                                            } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("alpha")) {
+                                                alpha.set(2, alpha.get(2) + 1);
+                                            }
+                                        }
+                                        else if (dayOfMonth >= 22) {
 
-                                        // Pindah ke tanggal berikutnya
-                                        calendar.add(Calendar.DAY_OF_MONTH, 1);
+                                            if(nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("sakit")){
+                                                sakit.set(3, sakit.get(3) + 1);
+                                            } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("izin")) {
+                                                izin.set(3, izin.get(3) + 1);
+                                            } else if (nestedItem.child("keterangan").getValue(String.class).equalsIgnoreCase("alpha")) {
+                                                alpha.set(3, alpha.get(3) + 1);
+                                            }
+                                        }
                                     }
-
-
                                 }
                             }
 
@@ -526,7 +535,8 @@ public class GuruActivity extends AppCompatActivity {
             // sub Judul
             Paragraph subJudul = new Paragraph("Nama Guru \t \t \t : " + namaGuru +
                     "\n Kelas \t \t \t \t \t : " + guruKelas +
-                    "\n Jumlah Kehadiran \t : " + autoIncrement.getTotal() +
+//                    "\n Jumlah Kehadiran \t : " + autoIncrement.getTotal() +
+                    "\n Jumlah Kehadiran \t : " + totalHadir +
                     "\n Jumlah Siswa \t\t\t: " + arrNisn.size() + "\n")
                     .setFontSize(12)
                     .setTextAlignment(TextAlignment.LEFT);
@@ -776,7 +786,7 @@ public class GuruActivity extends AppCompatActivity {
             };
             Collections.sort(allQrData, comparator);
 
-//            // Data Tabel
+            // Data Tabel
             for (DataQrRekap qr : allQrData) {
                 table.addCell(new Cell(1, 1).add(new Paragraph(String.valueOf(qr.getNo()))));
                 table.addCell(new Cell(1, 3).add(new Paragraph(String.valueOf(qr.getNama()))));
