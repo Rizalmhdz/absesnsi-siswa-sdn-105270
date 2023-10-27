@@ -729,7 +729,7 @@ public class GuruActivity extends AppCompatActivity {
             pdfDocument.setDefaultPageSize(PageSize.A4);
 
             // Judul
-            Paragraph judul = new Paragraph("Absensi Siswa Kelas " + guruKelas + "pada  Semester " + semester + " "+ tahun + " \nSD NEGERI 105270")
+            Paragraph judul = new Paragraph("Absensi Siswa Kelas " + guruKelas + " pada Semester " + semester + " "+ tahun + " \nSD NEGERI 105270")
                     .setBold().setFontSize(14)
                     .setTextAlignment(TextAlignment.CENTER);
             document.add(judul);
