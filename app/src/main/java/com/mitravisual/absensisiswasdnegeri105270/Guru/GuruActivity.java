@@ -543,7 +543,7 @@ public class GuruActivity extends AppCompatActivity {
                     "\n Jumlah Kehadiran \t : " + totalHadir +
                     "\n Jumlah Siswa \t\t\t: " + arrNisn.size() +
                     "\n Tanggal Cetak\t\t\t: " + hariTanggal + "\n")
-                    .setFontSize(12)
+                    .setFontSize(10)
                     .setTextAlignment(TextAlignment.LEFT);
             document.add(subJudul);
 
@@ -622,7 +622,7 @@ public class GuruActivity extends AppCompatActivity {
 //                    "\n Jumlah Kehadiran \t : " + autoIncrement.getTotal() +
                     "\n Jumlah Siswa \t\t\t: " + arrNisn.size() +
                     "\n Tanggal Cetak\t\t\t: " + hariTanggal + "\n")
-                    .setFontSize(12)
+                    .setFontSize(10)
                     .setTextAlignment(TextAlignment.LEFT);
             document.add(subJudul);
 
@@ -739,7 +739,7 @@ public class GuruActivity extends AppCompatActivity {
                     "\n Kelas \t \t \t \t \t : " + guruKelas +
                     "\n Jumlah Siswa \t\t\t: " + arrNisn.size() +
                     "\n Tanggal Cetak\t\t\t: " + hariTanggal + "\n")
-                    .setFontSize(12)
+                    .setFontSize(10)
                     .setTextAlignment(TextAlignment.LEFT);
             document.add(subJudul);
 
