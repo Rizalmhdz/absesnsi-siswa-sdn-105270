@@ -528,8 +528,10 @@ public class GuruActivity extends AppCompatActivity {
             Document document = new Document(pdfDocument);
             pdfDocument.setDefaultPageSize(PageSize.A4);
 
+
+
             // Judul
-            Paragraph judul = new Paragraph("Absensi Siswa SD NEGERI 105270")
+            Paragraph judul = new Paragraph("Absensi Harian Siswa Kelas " + guruKelas + " SD NEGERI 105270 \n" + hariTanggal)
                     .setBold().setFontSize(14)
                     .setTextAlignment(TextAlignment.CENTER);
             document.add(judul);
@@ -539,7 +541,8 @@ public class GuruActivity extends AppCompatActivity {
                     "\n Kelas \t \t \t \t \t : " + guruKelas +
 //                    "\n Jumlah Kehadiran \t : " + autoIncrement.getTotal() +
                     "\n Jumlah Kehadiran \t : " + totalHadir +
-                    "\n Jumlah Siswa \t\t\t: " + arrNisn.size() + "\n")
+                    "\n Jumlah Siswa \t\t\t: " + arrNisn.size() +
+                    "\n Tanggal Cetak\t\t\t: " + hariTanggal + "\n")
                     .setFontSize(12)
                     .setTextAlignment(TextAlignment.LEFT);
             document.add(subJudul);
