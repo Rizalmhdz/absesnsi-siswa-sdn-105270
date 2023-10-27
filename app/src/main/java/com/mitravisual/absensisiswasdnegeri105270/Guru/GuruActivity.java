@@ -32,6 +32,7 @@ import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
@@ -78,8 +79,8 @@ public class GuruActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
 
     private String Nisn, Nama, Kelas, user, keterangan;
-    private String namaGuru, guruKelas, tipeAbsen;
-    private int totalHadir;
+    private String namaGuru, guruKelas, tipeAbsen, nipGuru;
+    private int totalHadir, isGenap;
 
     private String tanggal, bulan, bulanInt, tahun, hariTanggal, semester;
     private IntentResult result;
@@ -172,6 +173,7 @@ public class GuruActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 namaGuru = dataSnapshot.child(user).child("nama").getValue(String.class);
+                nipGuru = dataSnapshot.child(user).child("nip").getValue(String.class);
                 guruKelas = dataSnapshot.child(user).child("guruKelas").getValue(String.class);
 
                 tvNama.setText(namaGuru);
@@ -385,7 +387,7 @@ public class GuruActivity extends AppCompatActivity {
                 calendar.setTime(currentDate);
                 int month = calendar.get(Calendar.MONTH) + 1;
                 semester = (month > 6) ? "Ganjil" : "Genap";
-                int isGenap = (semester.equalsIgnoreCase("ganjil"))? 6 : 0;
+                isGenap = (semester.equalsIgnoreCase("ganjil"))? 6 : 0;
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 databaseReference.child(user).child("Absensi-Siswa").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -543,7 +545,7 @@ public class GuruActivity extends AppCompatActivity {
             document.add(subJudul);
 
             // Tabel
-            float[] columnWidths = {1,1, 3, 2, 2, 2};
+            float[] columnWidths = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
             Table table = new Table(columnWidths);
             table.setWidth(UnitValue.createPercentValue(100));
             table.setFontSize(10);
@@ -551,12 +553,12 @@ public class GuruActivity extends AppCompatActivity {
             table.setTextAlignment(TextAlignment.CENTER);
 
             // Header Tabel
-            table.addHeaderCell("No");
-            table.addHeaderCell("NISN");
-            table.addHeaderCell("Nama");
-            table.addHeaderCell("Jam");
-            table.addHeaderCell("Tanggal");
-            table.addHeaderCell("Keterangan");
+            table.addHeaderCell(new Cell(1, 1).add(new Paragraph("No")));
+            table.addHeaderCell(new Cell(1, 3).add(new Paragraph("NISN")));
+            table.addHeaderCell(new Cell(1, 4).add(new Paragraph("Nama")));
+            table.addHeaderCell(new Cell(1, 2).add(new Paragraph("Jam")));
+            table.addHeaderCell(new Cell(1, 3).add(new Paragraph("Tanggal")));
+            table.addHeaderCell(new Cell(1, 2).add(new Paragraph("Keterangan")));
 
             Comparator<DataQr> comparator = new Comparator<DataQr>() {
                 @Override
@@ -568,13 +570,21 @@ public class GuruActivity extends AppCompatActivity {
 
             // Data Tabel
             for (DataQr qr : allQrData) {
-                table.addCell(String.valueOf(qr.getNo()));
-                table.addCell(qr.getCode());
-                table.addCell(qr.getNama());
-                table.addCell(String.valueOf(qr.getJam()));
-                table.addCell(String.valueOf(qr.getTanggal()));
-                table.addCell(String.valueOf(qr.getKeterangan()));
+                table.addCell(new Cell(1, 1).add(new Paragraph(String.valueOf(qr.getNo()))));
+                table.addCell(new Cell(1, 3).add(new Paragraph(qr.getCode())));
+                table.addCell(new Cell(1, 4).add(new Paragraph(qr.getNama())));
+                table.addCell(new Cell(1, 2).add(new Paragraph(String.valueOf(qr.getJam()))));
+                table.addCell(new Cell(1, 3).add(new Paragraph(String.valueOf(qr.getTanggal()))));
+                table.addCell(new Cell(1, 2).add(new Paragraph(String.valueOf(qr.getKeterangan()))));
+                table.startNewRow();
             }
+
+            table.addCell(new Cell(1, 11).setBorder(Border.NO_BORDER));
+
+            table.addCell(new Cell(1, 4)
+                    .add(new Paragraph(String.format("\n\nMengetahui\nWali Kelas\n\n\n\n\n %s \nNIP. %s", namaGuru, nipGuru)))
+                    .setBorder(Border.NO_BORDER));
+            table.startNewRow();
 
             document.add(table);
             document.close();
@@ -687,6 +697,13 @@ public class GuruActivity extends AppCompatActivity {
                 table.startNewRow();
             }
 
+            table.addCell(new Cell(1, 12).setBorder(Border.NO_BORDER));
+
+            table.addCell(new Cell(1, 8)
+                    .add(new Paragraph(String.format("\n\nMengetahui\nWali Kelas\n\n\n\n\n %s \nNIP. %s", namaGuru, nipGuru)))
+                    .setBorder(Border.NO_BORDER));
+            table.startNewRow();
+
             document.add(table);
             document.close();
 
@@ -706,7 +723,7 @@ public class GuruActivity extends AppCompatActivity {
             PdfWriter writer = new PdfWriter(outputStream);
             PdfDocument pdfDocument = new PdfDocument(writer);
             Document document = new Document(pdfDocument);
-            pdfDocument.setDefaultPageSize(PageSize.A4.rotate());
+            pdfDocument.setDefaultPageSize(PageSize.A4);
 
             // Judul
             Paragraph judul = new Paragraph("Absensi Siswa Kelas " + guruKelas + " Semester " + semester + " "+ tahun + " SD NEGERI 105270")
@@ -723,7 +740,7 @@ public class GuruActivity extends AppCompatActivity {
                     .setTextAlignment(TextAlignment.LEFT);
             document.add(subJudul);
 
-            float[] columnWidths = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+            float[] columnWidths = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
             Table table = new Table(columnWidths);
             table.setWidth(UnitValue.createPercentValue(100));
             table.setFontSize(10);
@@ -732,7 +749,7 @@ public class GuruActivity extends AppCompatActivity {
 
             // Baris 1
             Cell cell11 = new Cell(3, 1).add(new Paragraph("\nNo"));
-            Cell cell12 = new Cell(3, 3).add(new Paragraph("\nNama Siswa"));
+            Cell cell12 = new Cell(3, 5).add(new Paragraph("\nNama Siswa"));
             Cell cell13 = new Cell(1, 18).add(new Paragraph("Semester " + semester + " Tahun " + tahun));
             Cell cell14 = new Cell(2, 3).add(new Paragraph("\nTotal"));
 
@@ -741,40 +758,26 @@ public class GuruActivity extends AppCompatActivity {
             table.addCell(cell12);
             table.addCell(cell13);
             table.addCell(cell14);
-
             table.startNewRow();
 
-            String bln1 = "", bln2 = "", bln3 = "", bln4 = "", bln5 = "", bln6 = "";
-            // Baris 2
-            if(semester.equalsIgnoreCase("genap")){
-                bln1 = "Januari"; bln2 = "Februari"; bln3 = "Maret"; bln4 = "April"; bln5 = "Mei"; bln6 = "Juni";
-            } else if (semester.equalsIgnoreCase("ganjil")) {
-                bln1 = "Juli"; bln2 = "Agustus"; bln3 = "September"; bln4 = "Oktober"; bln5 = "November"; bln6 = "Desember";
-            }
-            Cell cell21 = new Cell(1, 3).add(new Paragraph(bln1));
-            Cell cell22 = new Cell(1, 3).add(new Paragraph(bln2));
-            Cell cell23 = new Cell(1, 3).add(new Paragraph(bln3));
-            Cell cell24 = new Cell(1, 3).add(new Paragraph(bln4));
-            Cell cell25 = new Cell(1, 3).add(new Paragraph(bln5));
-            Cell cell26 = new Cell(1, 3).add(new Paragraph(bln6));
+            Calendar calendar = Calendar.getInstance();
 
-            // Tambahkan sel-sel Baris 2 ke dalam tabel
-            table.addCell(cell21);
-            table.addCell(cell22);
-            table.addCell(cell23);
-            table.addCell(cell24);
-            table.addCell(cell25);
-            table.addCell(cell26);
+            // Membuat objek SimpleDateFormat untuk mendapatkan nama bulan
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMM", new Locale("id"));
+            for (int i = 0; i <= 5; i++) {
+                calendar.set(Calendar.MONTH, i+isGenap);
+
+                // Mengambil nama bulan dalam format string
+                String namaBulan = dateFormat.format(calendar.getTime());
+                table.addCell(new Cell(1, 3).add(new Paragraph(namaBulan)));
+            }
 
             table.startNewRow();
 
             for (int i = 0; i < 7; i++) {
-                Cell cell31 = new Cell(1, 1).add(new Paragraph("S"));
-                Cell cell32 = new Cell(1, 1).add(new Paragraph("I"));
-                Cell cell33 = new Cell(1, 1).add(new Paragraph("A"));
-                table.addCell(cell31);
-                table.addCell(cell32);
-                table.addCell(cell33);
+                table.addCell(new Cell(1, 1).add(new Paragraph("S")));
+                table.addCell(new Cell(1, 1).add(new Paragraph("I")));
+                table.addCell(new Cell(1, 1).add(new Paragraph("A")));
             }
             table.startNewRow();
 
@@ -789,23 +792,29 @@ public class GuruActivity extends AppCompatActivity {
             // Data Tabel
             for (DataQrRekap qr : allQrData) {
                 table.addCell(new Cell(1, 1).add(new Paragraph(String.valueOf(qr.getNo()))));
-                table.addCell(new Cell(1, 3).add(new Paragraph(String.valueOf(qr.getNama()))));
+                table.addCell(new Cell(1, 5).add(new Paragraph(String.valueOf(qr.getNama()))));
 
                 int sakit = 0, izin = 0, alpha = 0;
                 for (int i = 0; i < 6; i++) {
-                    table.addCell(String.valueOf(qr.getSakit().get(i)));
-                    table.addCell(String.valueOf(qr.getIzin().get(i)));
-                    table.addCell(String.valueOf(qr.getAlpha().get(i)));
+                    table.addCell(new Cell(1, 1).add(new Paragraph(String.valueOf(qr.getSakit().get(i)))));
+                    table.addCell(new Cell(1, 1).add(new Paragraph(String.valueOf(qr.getIzin().get(i)))));
+                    table.addCell(new Cell(1, 1).add(new Paragraph(String.valueOf(qr.getAlpha().get(i)))));
 
                     sakit = sakit + qr.getSakit().get(i);
                     izin = izin + qr.getIzin().get(i);
                     alpha = alpha + qr.getAlpha().get(i);
                 }
-                table.addCell(String.valueOf(sakit));
-                table.addCell(String.valueOf(izin));
-                table.addCell(String.valueOf(alpha));
+                table.addCell(new Cell(1, 1).add(new Paragraph(String.valueOf(sakit))));
+                table.addCell(new Cell(1, 1).add(new Paragraph(String.valueOf(izin))));
+                table.addCell(new Cell(1, 1).add(new Paragraph(String.valueOf(alpha))));
                 table.startNewRow();
             }
+
+            table.addCell(new Cell(1, 19).setBorder(Border.NO_BORDER));
+            table.addCell(new Cell(1, 8)
+                    .add(new Paragraph(String.format("\n\nMengetahui\nWali Kelas\n\n\n\n\n %s \nNIP. %s", namaGuru, nipGuru)))
+                    .setBorder(Border.NO_BORDER));
+            table.startNewRow();
 
             document.add(table);
             document.close();
