@@ -531,7 +531,7 @@ public class GuruActivity extends AppCompatActivity {
 
 
             // Judul
-            Paragraph judul = new Paragraph("Absensi Harian Siswa Kelas " + guruKelas + " SD NEGERI 105270 \n" + hariTanggal)
+            Paragraph judul = new Paragraph("Absensi Harian Siswa Kelas " + guruKelas + " pada " + hariTanggal + " \nSD NEGERI 105270 \n")
                     .setBold().setFontSize(14)
                     .setTextAlignment(TextAlignment.CENTER);
             document.add(judul);
@@ -611,7 +611,7 @@ public class GuruActivity extends AppCompatActivity {
             pdfDocument.setDefaultPageSize(PageSize.A4);
 
             // Judul
-            Paragraph judul = new Paragraph("Absensi Siswa Kelas " + guruKelas + " " + bulan + " "+ tahun + " SD NEGERI 105270")
+            Paragraph judul = new Paragraph("Absensi Siswa Kelas " + guruKelas + " pada " + bulan + " "+ tahun + " \nSD NEGERI 105270")
                     .setBold().setFontSize(14)
                     .setTextAlignment(TextAlignment.CENTER);
             document.add(judul);
@@ -729,7 +729,7 @@ public class GuruActivity extends AppCompatActivity {
             pdfDocument.setDefaultPageSize(PageSize.A4);
 
             // Judul
-            Paragraph judul = new Paragraph("Absensi Siswa Kelas " + guruKelas + " Semester " + semester + " "+ tahun + " SD NEGERI 105270")
+            Paragraph judul = new Paragraph("Absensi Siswa Kelas " + guruKelas + "pada  Semester " + semester + " "+ tahun + " \nSD NEGERI 105270")
                     .setBold().setFontSize(14)
                     .setTextAlignment(TextAlignment.CENTER);
             document.add(judul);
