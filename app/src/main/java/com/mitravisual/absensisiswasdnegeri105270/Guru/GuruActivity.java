@@ -697,9 +697,9 @@ public class GuruActivity extends AppCompatActivity {
                 table.startNewRow();
             }
 
-            table.addCell(new Cell(1, 12).setBorder(Border.NO_BORDER));
+            table.addCell(new Cell(1, 11).setBorder(Border.NO_BORDER));
 
-            table.addCell(new Cell(1, 8)
+            table.addCell(new Cell(1, 9)
                     .add(new Paragraph(String.format("\n\nMengetahui\nWali Kelas\n\n\n\n\n %s \nNIP. %s", namaGuru, nipGuru)))
                     .setBorder(Border.NO_BORDER));
             table.startNewRow();
